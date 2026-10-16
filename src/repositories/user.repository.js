@@ -5,10 +5,13 @@ const User = require("../models/User")
 class UserRepository{
     async findByEmailAndUsername(email, username){
 
-        return await User.find({
+        const sanitizedEmail = email.trim().toLowerCase()
+        const sanitizedUsername = username.trim().toLowerCase()
+
+        return await User.findOne({
             $or:[
-                {email:email},
-                {username:username}
+                {email:sanitizedEmail},
+                {username:sanitizedUsername}
             ]
         })
 
