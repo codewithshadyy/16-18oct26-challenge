@@ -24,7 +24,7 @@ class UserService{
             username,
             email,
             roles,
-            password
+            password:hashedPassword
             
         })
 
