@@ -17,6 +17,10 @@ class UserRepository{
 
     }
 
+    async findByUsername(username){
+        return await User.findOne(usernamesername)
+    }
+
 
     async create(userData){
         return await User.create(userData)

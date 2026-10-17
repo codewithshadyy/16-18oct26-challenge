@@ -30,6 +30,10 @@ class UserService{
 
         return {id:newUser._id, username:newUser.username, email:newUser.email, roles:newUser.roles}
     }
+
+    async loginUser(username, password){
+        const existingUser = await new
+    }
 }
 
 
