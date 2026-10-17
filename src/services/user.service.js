@@ -32,7 +32,15 @@ class UserService{
     }
 
     async loginUser(username, password){
-        const existingUser = await new
+        const  user = await UserRepository.findByUsername(username)
+
+        if(user){
+            const error = new error("Invalid credentials")
+
+            throw error
+        }
+
+        const isMatch= await bcrypt.compare(passsowrd, user.password)
     }
 }
 
