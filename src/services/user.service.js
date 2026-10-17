@@ -5,7 +5,7 @@ const userRepository = require("../repositories/user.repository")
 
 class UserService{
 
-    async registerUser(username, email, password){
+    async registerUser(username, email,roles,  password){
         
         const existingUser =  await userRepository.findByEmailAndUsername(email, username)
 
@@ -23,11 +23,12 @@ class UserService{
         const newUser = await userRepository.create({
             username,
             email,
+            roles,
             password:hashedPassword
             
         })
 
-        return {id:newUser._id, username:newUser.username, email:newUser.email}
+        return {id:newUser._id, username:newUser.username, email:newUser.email, roles:newUser.roles}
     }
 }
 
