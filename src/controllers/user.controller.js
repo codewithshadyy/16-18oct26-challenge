@@ -36,7 +36,7 @@ class UserController{
 
 
 
-    async login(req, res ){
+    async login(req, res, next ){
 
 
         try {
@@ -48,7 +48,7 @@ class UserController{
                     message:"Pleaase input all the fields"
                 })
 
-            const user = await userService.loginUser(username, password)
+            const user = await UserService.loginUser(username, password)
             
             return res.status(200).json({
                 message:`Welcome back ${user.username} !!!`,
