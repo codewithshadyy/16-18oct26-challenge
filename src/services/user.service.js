@@ -2,6 +2,7 @@
 const bcrypt = require("bcrypt")
 const UserRepository = require("../repositories/user.repository")
 const userRepository = require("../repositories/user.repository")
+const jwt = require("jsonwebtoken")
 
 class UserService{
 
@@ -31,16 +32,42 @@ class UserService{
         return {id:newUser._id, username:newUser.username, email:newUser.email, roles:newUser.roles}
     }
 
+
+
+
     async loginUser(username, password){
         const  user = await UserRepository.findByUsername(username)
 
-        if(user){
-            const error = new error("Invalid credentials")
+
+        if(!user){
+            const error = new Error("Invalid credentials")
 
             throw error
         }
 
+
+
         const isMatch= await bcrypt.compare(passsowrd, user.password)
+
+        if(!ismatch){
+            const error = new Error("Invalid Credentials")
+
+            throw error
+        }
+        const token = jwt.sign({id:user._id, username:user.username, email:user.email  }, process.env.JWT_SECRET, {
+    expiresIn:"7d"
+            })
+
+            return {
+                         token, 
+                  user:{
+                        id:user._id, username:user.username, email:user.email
+
+     }
+}
+
+
+
     }
 }
 
