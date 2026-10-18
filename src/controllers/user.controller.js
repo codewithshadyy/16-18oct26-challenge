@@ -5,7 +5,7 @@ const UserService = require("../services/user.service")
 
 
 class UserController{
-    async register(req,res, next){
+    async register(req,res){
 
 
         try {
@@ -36,7 +36,7 @@ class UserController{
 
 
 
-    async login(req, res, next ){
+    async login(req, res ){
 
 
         try {
@@ -48,14 +48,18 @@ class UserController{
                     message:"Pleaase input all the fields"
                 })
 
+            
+            }
             const user = await UserService.loginUser(username, password)
+
+            
             
             return res.status(200).json({
-                message:`Welcome back ${user.username} !!!`,
+                message:`Welcome back ${user.data.username} !!!`,
                 data:user
             })
 
-            }
+            
         } catch (error) {
 
             console.error(error.message)

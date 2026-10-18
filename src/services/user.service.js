@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt")
 const UserRepository = require("../repositories/user.repository")
 const userRepository = require("../repositories/user.repository")
-const jwt = require("jsonwebtoken")
+const TokenHandler = require("../utils/token.generator")
 
 require("dotenv").config()
 class UserService{
@@ -37,7 +37,7 @@ class UserService{
 
 
     async loginUser(username, password){
-        const  user = await UserRepository.findByEmailAndUsername(username)
+        const  user = await UserRepository.findByUsername(username)
 
 
         if(!user){
@@ -50,23 +50,21 @@ class UserService{
 
         const isMatch= await bcrypt.compare(password, user.password)
 
-        if(!ismatch){
+        if(!isMatch){
             const error = new Error("Invalid Credentials")
 
             throw error
         }
 
 
-        const token = jwt.sign({id:user._id, username:user.username, email:user.email  }, process.env.JWT_SECRET, {
-    expiresIn:"7d"
-            })
+        const token = await TokenHandler.generateToken(user)
 
 
 
-            return {
-                 token, 
-                  user:{
-                        id:user._id, username:user.username, email:user.email
+    return {
+        token,
+         data:{
+        id:user._id, username:user.username, email:user.email
 
      }
 }

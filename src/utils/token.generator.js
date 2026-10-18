@@ -4,7 +4,7 @@ require("dotenv").config()
 
 
 class TokenHandler{
-    async(user){
+    async generateToken(user){
         return jwt.sign({id:user._id, username:user.username, role:user.roles},
              process.env.JWT_SECRET,
               {expiresIn:"7d"})
