@@ -1,5 +1,6 @@
 
 
+const userService = require("../services/user.service")
 const UserService = require("../services/user.service")
 
 
@@ -30,6 +31,42 @@ class UserController{
             })
             
         }
+    }
+
+
+
+
+    async login(req, res ){
+
+
+        try {
+
+            const {username, password} = req.body
+
+            if(!username || !password){
+                return res.status(400).json({
+                    message:"Pleaase input all the fields"
+                })
+
+            const user = await userService.loginUser(username, password)
+            
+            return res.status(200).json({
+                message:`Welcome back ${user.username} !!!`,
+                data:user
+            })
+
+            }
+        } catch (error) {
+
+            console.error(error.message)
+
+            return res.status(500).json({
+                message:"Something went wrong"
+                
+            })
+            
+        }
+
     }
 }
 
