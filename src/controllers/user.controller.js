@@ -45,7 +45,7 @@ class UserController{
 
             if(!username || !password){
                 return res.status(400).json({
-                    message:"Pleaase input all the fields"
+                    message:"Please input all the fields"
                 })
 
             
@@ -62,7 +62,6 @@ class UserController{
             
         } catch (error) {
 
-            console.error(error.message)
 
             return res.status(500).json({
                 message:"Something went wrong"
